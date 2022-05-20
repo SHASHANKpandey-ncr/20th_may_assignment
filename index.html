@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        *{
+            font-family:sans-serif ;
+        }
+        form{margin-top: 20px;}
+        .navbar{
+            height: 100px;
+            width: 100%;
+            background-color: rgb(39, 34, 34);
+            border-radius: 10px;
+            display: flex;
+        }
+        .navbar>div{
+            /* border: 1px solid green; */
+            width: auto;
+            height: 100px;
+            color: beige;
+            display: flex;
+            align-items: center;
+            margin-left: 5%;
+            
+        }
+
+    </style>
+
+
+</head>
+<body>
+    <div class="navbar">
+        <div><h2 class="web18">Students data will be shown here</h2></div>
+        <div><h2 class="web17"></h2></div>
+    </div>
+
+    <form action="" onsubmit="form()" id="form" >
+    <input type="text" placeholder="enter name" id="name" required>
+    <select name="" id="course" required>
+        <option value="">Enter course</option>
+        <option value="Full Stack">Full Stack</option>
+        <option value="Frontend">Frontend</option>
+        <option value="Backend">Backend</option>
+    </select>
+    <select name="" id="unit"  required>
+        <option value="">Enter unit</option>
+        <option value="unit1">Unit 1</option>
+        <option value="unit2">Unit 2</option>
+    </select>
+    <input type="url" placeholder="enter image url" id="image" required>
+    <select name="" id="batch" required>
+        <option value="">Enter Batch name</option>
+        <option value="Web-18">Web-18</option>
+        <option value="Web-17">Web-17</option>
+    </select>
+    <input type="submit" id="submit">
+    </form>
+
+
+<a href="dashboard.html"><h1>GoTo Student's Dashboard >></h1> </a>
+
+
+</body>
+</html>
+
+
+<script>
+// navbar script
+var b1= localStorage.getItem('b1') || 0;
+var b2= localStorage.getItem('b2') || 0;
+
+
+
+
+
+// navbar script end
+
+
+
+
+
+var arr= JSON.parse(localStorage.getItem('data')) || []
+
+function form(){
+    event.preventDefault()
+    const form = document.querySelector('form');
+    var object={}
+
+    object.name=form.name.value;
+    object.course=form.course.value;
+    object.unit=form.unit.value;
+    object.image=form.image.value;
+    object.batch=form.batch.value;
+
+
+arr.push(object)
+localStorage.setItem('data',JSON.stringify(arr))
+
+if(object.batch==='Web-18'){b1++}
+if(object.batch==='Web-17'){b2++}
+console.log(b1,b2)
+localStorage.setItem('b1',b1)
+localStorage.setItem('b2',b2)
+
+
+
+window.location.reload()
+
+}
+document.querySelector('.web18').innerText='Batch Web-18 : ' +b1
+document.querySelector('.web17').innerText='Batch Web-17 : ' +b2
+
+
+
+</script>

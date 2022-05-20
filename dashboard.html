@@ -1,0 +1,155 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        *{font-family: sans-serif}
+        #container{
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        #container>div{
+            height: 500px;
+            width: 22%;
+            margin-left: 1%;
+            margin-right: 1%;
+            margin-top: 1%;
+            margin-bottom: 1%;
+            border-radius: 20px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        }
+        img{
+             border-top-left-radius: 20px;
+             border-top-right-radius: 20px;
+             width: 99%;
+             display: block;
+             margin: auto;
+             height: 60%;
+        }
+        h2,p{text-align: center;}
+        button{
+            display: block;
+            margin: auto;
+            margin-top: -10px;
+            border-radius: 5px;
+            color: red;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: red;
+            color: white;
+
+        }
+        .navbar{
+            height: 100px;
+            width: 100%;
+            background-color: rgb(39, 34, 34);
+            border-radius: 10px;
+            display: flex;
+        }
+        .navbar>div{
+            /* border: 1px solid green; */
+            width: auto;
+            height: 100px;
+            color: beige;
+            display: flex;
+            align-items: center;
+            margin-left: 5%;
+            
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div><h2 class="web18"></h2></div>
+        <div><h2 class="web17"></h2></div>
+    </div>
+    <a href="index.html">Click here to go to home page >> </a>
+    <div id="container"></div>
+</body>
+</html>
+
+
+<script>
+
+var arr= JSON.parse(localStorage.getItem('data')) ||[]
+const container = document.querySelector('#container');
+
+function display(arr){
+
+arr.forEach(function(ele){
+const card = document.createElement('div');
+
+const image = document.createElement('img');
+image.src=ele.image
+
+const name = document.createElement('h2');
+name.innerText=ele.name
+
+const course = document.createElement('p');
+course.innerText='Course: '+ ele.course
+
+const batch = document.createElement('p');
+batch.innerText='Batch: '+ele.batch
+
+const unit = document.createElement('p');
+unit.innerText='Unit: '+ele.unit
+
+const Delete = document.createElement('button');
+Delete.innerText='Delete !!'
+
+Delete.addEventListener('click',function(event){
+    del(ele.name)
+   
+})
+
+card.append(image,name,course,batch,unit,Delete)
+container.append(card)
+})
+
+}
+
+display(arr)
+var thrash= JSON.parse(localStorage.getItem('thrash')) || []
+function del(n)
+{
+
+
+    thrash=arr.filter(function(ele){
+        return ele.name==n
+        
+    })
+    
+    localStorage.setItem('thrash',JSON.stringify(thrash))
+
+    arr=arr.filter(function(ele){
+        return ele.name!=n
+    })
+    display(arr)
+    localStorage.setItem('data',JSON.stringify(arr))
+    window.location.reload()
+
+    localStorage.removeItem('b1')
+    localStorage.removeItem('b2')
+
+}
+
+
+// navbar script
+var b1= localStorage.getItem('b1') || 0;
+var b2= localStorage.getItem('b2') || 0;
+
+
+document.querySelector('.web18').innerText='Batch Web-18 : ' +b1
+document.querySelector('.web17').innerText='Batch Web-17 : ' +b2
+
+
+// navbar script end
+
+
+
+</script>
