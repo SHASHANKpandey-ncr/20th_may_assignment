@@ -76,12 +76,24 @@
 
 <script>
 
+    // navbar script
+var b1= localStorage.getItem('b1') || 0;
+var b2= localStorage.getItem('b2') || 0;
+
+
+document.querySelector('.web18').innerText='Batch Web-18 : ' +b1
+document.querySelector('.web17').innerText='Batch Web-17 : ' +b2
+
+
+// navbar script end
+
+
 var arr= JSON.parse(localStorage.getItem('data')) ||[]
 const container = document.querySelector('#container');
 
 function display(arr){
 
-arr.forEach(function(ele){
+arr.forEach(function(ele,i){
 const card = document.createElement('div');
 
 const image = document.createElement('img');
@@ -102,8 +114,8 @@ unit.innerText='Unit: '+ele.unit
 const Delete = document.createElement('button');
 Delete.innerText='Delete !!'
 
-Delete.addEventListener('click',function(event){
-    del(ele.name)
+Delete.addEventListener('click',function(){
+    del(i)
    
 })
 
@@ -113,43 +125,32 @@ container.append(card)
 
 }
 
-display(arr)
-var thrash= JSON.parse(localStorage.getItem('thrash')) || []
-function del(n)
+display(arr) // displaying cards in dashboard
+
+
+function del(i) // deleting function 
 {
+    var arr= JSON.parse(localStorage.getItem('data')) ||[]
 
+    let n_arr=arr.filter(function(ele,index){
+        if(index===i)
+        {
+            let thrash= JSON.parse(localStorage.getItem('thrash')) || []
+            thrash.push(ele);
+            if(ele.batch==='Web-18'){b1--}
+            else if(ele.batch==='Web-17'){b2--}
+            localStorage.setItem('b1',b1)
+            localStorage.setItem('b2',b2)
 
-    thrash=arr.filter(function(ele){
-        return ele.name==n
-        
+            localStorage.setItem('thrash',JSON.stringify(thrash))
+        }
+        else{
+            return index!==i;
+        }
     })
-    
-    localStorage.setItem('thrash',JSON.stringify(thrash))
-
-    arr=arr.filter(function(ele){
-        return ele.name!=n
-    })
-    display(arr)
-    localStorage.setItem('data',JSON.stringify(arr))
+    localStorage.setItem('data',JSON.stringify(n_arr))
+    display(n_arr)
     window.location.reload()
-
-    localStorage.removeItem('b1')
-    localStorage.removeItem('b2')
-
 }
-
-
-// navbar script
-var b1= localStorage.getItem('b1') || 0;
-var b2= localStorage.getItem('b2') || 0;
-
-
-document.querySelector('.web18').innerText='Batch Web-18 : ' +b1
-document.querySelector('.web17').innerText='Batch Web-17 : ' +b2
-
-
-// navbar script end
-
-
 
 </script>
